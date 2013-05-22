@@ -10,6 +10,7 @@ import java.util.Iterator;
  *
  * @author gerard
  */
+ 
 public class AcumulatedObserver extends Observer {
     private int[] acumulated;
     public AcumulatedObserver(){
