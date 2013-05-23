@@ -9,6 +9,8 @@ import java.util.Collection;
  *
  * @author gerard
  */
+ 
+ /*Suggerencia per que no utilitza un singleton ENUM per la implementació del singleton*/
 public class Historical {
     private static Collection<Roll> roll_list;
     private Historical(){
