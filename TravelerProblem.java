@@ -86,6 +86,9 @@ public class TravelerProblem {
                 } catch (Exception e) {
                     System.out.println("Introduce valid option");
                 }
+                /*Tractament de les excepcions, en tot el codi son de caire informatiu, no es fa
+                res per intentar tractarla, i que l'usuari tingui una continuitat amb l'execucio 
+                del programa*/
             }
             switch (opt) {
                 case 1:
