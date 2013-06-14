@@ -15,10 +15,6 @@ public class RandomStrategy extends SimpleStrategy{
      */
     @Override
     public int getRoll(){
-        int value = (int)(Math.random()*100);
-        if(value<2){
-            value = 2;
-        }
-        return value;
+        return getRandomInt();
     }
 }

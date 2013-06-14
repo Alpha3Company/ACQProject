@@ -11,17 +11,11 @@ import java.util.Iterator;
  */
 public class MediumIntelligentStrategy extends IntelligentStrategy {
     /**
-     * 
-     * @return the roll of the strategy
+     *
+     * @return the medium historic result
      */
-    @Override
-    public int getRoll(){
+    private int getMediumHistoricResult(){
         Iterator<Roll> it = historical.iterator();
-        if(Historical.getInstance().isEmpty()){
-            int value= (int)(Math.random()*100);
-            if(value<2) value=2;
-            return value;
-        }
         int total=0;
         while(it.hasNext()){
             Collection results = it.next().getRollResult();
@@ -33,5 +27,16 @@ public class MediumIntelligentStrategy extends IntelligentStrategy {
             total+=subtotal/results.size();
         }
         return total/Historical.getInstance().size();
+    }
+    /**
+     * 
+     * @return the roll of the strategy
+     */
+    @Override
+    public int getRoll(){
+        if(Historical.getInstance().isEmpty()){
+            return getRandomInt();
+        }
+        return getMediumHistoricResult();
     }
 }

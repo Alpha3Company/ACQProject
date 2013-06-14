@@ -20,44 +20,22 @@ public class TravelerProblem {
     public static IStrategy loadStrategy() throws IOException {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        System.out.println("Select player1 Strategy:");
-        System.out.println("1.- Simple Strategy");
-        System.out.println("2.- Composed Strategy");
-        String option = br.readLine();
-        if (option.equals("1")) {
-            System.out.println("1.- Random Strategy");
-            System.out.println("2.- Fixed Strategy");
-            System.out.println("3.- Brisk Strategy");
-            System.out.println("4.- Ambitious Strategy");
-            System.out.println("5.- Medium Intelligent Strategy");
-            System.out.println("6.- LastRoll Intelligent Strategy");
-            System.out.println("7.- Troll Strategy");
+
+        printPlayerStrategy();///
+
+        int option = getUserOption(br, 1, 2);///
+
+        if (1 == option) {
+
+            printSimpleStrategy();////
+
             int opt;
-            while (true) {
-                try {
-                    opt = Integer.parseInt(br.readLine());
-                    if (opt >= 1 && opt <= 7) {
-                        break;
-                    } else {
-                        System.out.println("Introduce valid option");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Introduce valid option");
-                }
-            }
+            opt = getUserOption(br, 1, 7);///
             switch (opt) {
                 case 1:
                     return new RandomStrategy();
                 case 2:
-                    System.out.println("Insert the fix value");
-                    while (true) {
-                        try {
-                            int value = Integer.parseInt(br.readLine());
-                            return new FixedStrategy(value);
-                        } catch (Exception e) {
-                            System.out.println("Insert valid value");
-                        }
-                    }
+                    return getUserFixedStrategy(br);///
                 case 3:
                     return new BriskStrategy();
                 case 4:
@@ -69,24 +47,13 @@ public class TravelerProblem {
                 case 7:
                     return new TrollStrategy();
             }
-        } else if (option.equals("2")) {
-            System.out.println("Select composed strategy type:");
-            System.out.println("1.- Mean Composed Strategy");
-            System.out.println("2.- Max Composed Strategy");
+        } else if (2 == option) {
+
+            printComposedStrategy();///
+
             ComposedStrategy strategy;
             int opt;
-            while (true) {
-                try {
-                    opt = Integer.parseInt(br.readLine());
-                    if (opt >= 1 && opt <= 2) {
-                        break;
-                    } else {
-                        System.out.println("Introduce valid option");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Introduce valid option");
-                }
-            }
+            opt = getUserOption(br, 1, 2); ///
             switch (opt) {
                 case 1:
                     strategy = new MeanComposedStrategy();
@@ -99,35 +66,16 @@ public class TravelerProblem {
             }
 
             while (true) {
-                System.out.println("Select a simple strategy to add:");
-                System.out.println("1.- Random Strategy");
-                System.out.println("2.- Fixed Strategy");
-                System.out.println("3.- Brisk Strategy");
-                System.out.println("4.- Ambitious Strategy");
-                System.out.println("5.- Intelligent Strategy");
-                System.out.println("6.- LastRoll Strategy");
-                System.out.println("7.- Troll Strategy");
-                System.out.println("8.- End Adding");
-                while (true) {
-                    try {
-                        opt = Integer.parseInt(br.readLine());
-                        if (opt >= 1 && opt <= 8) {
-                            break;
-                        } else {
-                            System.out.println("Introduce valid option");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Introduce valid option");
-                    }
-                }
+
+                printSelectionSimpleStrategy(); ///
+                opt = getUserOption(br, 1, 8);   ///
+
                 switch (opt) {
                     case 1:
                         strategy.addStrategy(new RandomStrategy());
                         break;
                     case 2:
-                        System.out.println("Insert the fix value");
-                        int value = Integer.parseInt(br.readLine());
-                        strategy.addStrategy(new FixedStrategy(value));
+                        strategy.addStrategy(new FixedStrategy(insertFixValue(br))); ///
                         break;
                     case 3:
                         strategy.addStrategy(new BriskStrategy());
@@ -152,28 +100,85 @@ public class TravelerProblem {
         return null;
     }
 
+    private static IStrategy getUserFixedStrategy(BufferedReader br) {
+        System.out.println("Insert the fix value");
+        while (true) {
+            try {
+                int value = Integer.parseInt(br.readLine());
+                return new FixedStrategy(value);
+            } catch (Exception e) {
+                System.out.println("Insert valid value");
+            }
+        }
+    }
+
+    private static int getUserOption(BufferedReader br, int min, int max) {
+        int opt;
+        while (true) {
+            try {
+                opt = Integer.parseInt(br.readLine());
+                if (opt >= min && opt <= max) {
+                    break;
+                } else {
+                    System.out.println("Introduce valid option");
+                }
+            } catch (Exception e) {
+                System.out.println("Introduce valid option");
+            }
+        }
+        return opt;
+    }
+
+    private static void printObservers() {
+        System.out.println("Select the observer to add");
+        System.out.println("1.- Winner Observer");
+        System.out.println("2.- Acumulated Observer");
+        System.out.println("3.- Individual Roll Observer");
+        System.out.println("4.- End Adding");
+    }
+
+    private static void printSelectionSimpleStrategy() {
+        System.out.println("Select a simple strategy to add:");
+        printSimpleStrategy();
+        System.out.println("8.- End Adding");
+    }
+
+    private static void printComposedStrategy() {
+        System.out.println("Select composed strategy type:");
+        System.out.println("1.- Mean Composed Strategy");
+        System.out.println("2.- Max Composed Strategy");
+    }
+
+    private static void printSimpleStrategy() {
+        System.out.println("1.- Random Strategy");
+        System.out.println("2.- Fixed Strategy");
+        System.out.println("3.- Brisk Strategy");
+        System.out.println("4.- Ambitious Strategy");
+        System.out.println("5.- Medium Intelligent Strategy");
+        System.out.println("6.- LastRoll Intelligent Strategy");
+        System.out.println("7.- Troll Strategy");
+    }
+
+    private static void printPlayerStrategy() {
+        System.out.println("Select player1 Strategy:");
+        System.out.println("1.- Simple Strategy");
+        System.out.println("2.- Composed Strategy");
+    }
+
+    private static int insertFixValue(BufferedReader br) throws IOException {
+        System.out.println("Insert the fix value");
+        int value = Integer.parseInt(br.readLine());
+        return value;
+    }
+
     public static void addObservers(Game.Builder b) {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
         while (true) {
-            System.out.println("Select the observer to add");
-            System.out.println("1.- Winner Observer");
-            System.out.println("2.- Acumulated Observer");
-            System.out.println("3.- Individual Roll Observer");
-            System.out.println("4.- End Adding");
-            int opt;
-            while (true) {
-                try {
-                    opt = Integer.parseInt(br.readLine());
-                    if (opt >= 1 && opt <= 4) {
-                        break;
-                    } else {
-                        System.out.println("Introduce valid option");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Introduce valid option");
-                }
-            }
+
+            printObservers(); ///
+
+            int opt = getUserOption(br, 1, 4); ///
             switch (opt) {
                 case 1:
                     b.addObserver(new WinnerObserver());
@@ -208,14 +213,6 @@ public class TravelerProblem {
 
     public static void main(String[] args) {
         Game.Builder b = new Game.Builder();
-        /*ComposedStrategy composta = new MeanComposedStrategy();
-        composta.addStrategy(new FixedStrategy(50));
-        //composta.addStrategy(new AmbitiousStrategy());
-        composta.addStrategy(new RandomStrategy());
-        Game joc = b.addPlayer(new NormalPlayerFactory(), composta, "Joan").addPlayer(new NormalPlayerFactory(), new MediumIntelligentStrategy(), "Ramon").setRolls(new NormalRollFactory(), 4).build();
-        joc.addObserver(new IndividualRollObserver());
-        joc.addObserver(new WinnerObserver());
-        joc.play();*/
 
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);

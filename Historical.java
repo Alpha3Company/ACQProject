@@ -9,17 +9,16 @@ import java.util.Collection;
  *
  * @author gerard
  */
-public class Historical {
+public enum Historical {
+    Instance;
     private static Collection<Roll> roll_list;
-    private Historical(){
-    }
     /**
      * 
      * @return the Historical instance
      */
     public static Collection<Roll> getInstance(){
         if(roll_list==null){
-            roll_list=new ArrayList();
+            roll_list=new ArrayList<Roll>();
         }
         return roll_list;
     }

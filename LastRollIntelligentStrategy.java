@@ -12,21 +12,12 @@ import java.util.Iterator;
  * @author Gerard
  */
 public class LastRollIntelligentStrategy extends IntelligentStrategy {
-
     /**
-     * 
-     * @return the roll of the strategy
+     *
+     * @return the max result of the last roll
      */
-    @Override
-    public int getRoll() {
+    private int getLastRollMaxResult() {
         Iterator<Roll> it = historical.iterator();
-        if (Historical.getInstance().isEmpty()) {
-            int value = (int) (Math.random() * 100);
-            if (value < 2) {
-                value = 2;
-            }
-            return value;
-        }
         int total = 0;
         Collection results = it.next().getRollResult();
         while (it.hasNext()) {
@@ -37,5 +28,17 @@ public class LastRollIntelligentStrategy extends IntelligentStrategy {
             total = Math.max(it2.next(), total);
         }
         return total;
+    }
+
+    /**
+     * 
+     * @return the roll of the strategy
+     */
+    @Override
+    public int getRoll() {
+        if (Historical.getInstance().isEmpty()) {
+            return getRandomInt();
+        }
+        return getLastRollMaxResult();
     }
 }
