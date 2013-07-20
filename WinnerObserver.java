@@ -26,6 +26,12 @@ public class WinnerObserver extends Observer {
         if(player2>player1){
             result = it.next().getName();
         }
+        /*Implemtar el metode .equals a la clase player*/
+        /*
+        * if(player2.equals(player1)){
+            result = "drawn";
+        }
+        */
         if(player2==player1){
             result = "drawn";
         }
